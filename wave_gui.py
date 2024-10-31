@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import numpy as np
 import matplotlib.pyplot as plt
+'''Hello'''
 
 def plot_waves():
     freq1 = float(freq1_entry.get())
