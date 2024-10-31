@@ -69,3 +69,4 @@ submit_btn = ttk.Button(root, text="Plot Waves", command=plot_waves)
 submit_btn.grid(column=0, row=6, columnspan=2)
 
 root.mainloop()
+print("change")
