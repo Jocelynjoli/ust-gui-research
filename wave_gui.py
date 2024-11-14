@@ -23,28 +23,46 @@ def plot_waves():
     wave2 = amp2 * np.sin(freq2 * t + phase2)
     resultant_wave = wave1 + wave2
 
-    # Create a Matplotlib figure and axes with smaller size
-    fig, axs = plt.subplots(3, 1, figsize=(4, 6))  # Adjust the size here
+    # Create a 2x2 grid layout for subplots
+    fig, axs = plt.subplots(2, 2, figsize=(10, 6), gridspec_kw={'height_ratios': [1, 1]})
+    fig.patch.set_facecolor('black')  # Set background color for the whole figure
 
-    # Plot Wave 1
-    axs[0].plot(t, wave1, label='Wave 1', color='blue')
-    axs[0].set_title('Wave 1')
-    axs[0].grid()
+    # Configure the appearance of each axis
+    for i, ax in enumerate(axs.flat):
+        ax.set_facecolor('black')
+        ax.grid(True, color='green', linestyle='--', linewidth=0.5)
+        ax.tick_params(colors='green', which='both')
+        ax.spines['bottom'].set_color('green')
+        ax.spines['top'].set_color('green')
+        ax.spines['right'].set_color('green')
+        ax.spines['left'].set_color('green')
+    
+    # Plot Wave 1 (top left)
+    axs[0, 0].plot(t, wave1, color='lime')
+    axs[0, 0].set_title('Wave 1', color='lime')
 
-    # Plot Wave 2
-    axs[1].plot(t, wave2, label='Wave 2', color='orange')
-    axs[1].set_title('Wave 2')
-    axs[1].grid()
+    # Plot Wave 2 (top right)
+    axs[0, 1].plot(t, wave2, color='orange')
+    axs[0, 1].set_title('Wave 2', color='orange')
 
-    # Plot the Resultant Wave
-    axs[2].plot(t, resultant_wave, label='Resultant Wave', color='green')
-    axs[2].set_title('Resultant Wave')
-    axs[2].grid()
+    # Plot the Resultant Wave (bottom, spanning both columns)
+    axs[1, 0].remove()  # Remove the bottom-left axis
+    axs[1, 1].remove()  # Remove the bottom-right axis
+    ax_res = fig.add_subplot(2, 1, 2)  # Add a new subplot that spans both columns
+    ax_res.set_facecolor('black')
+    ax_res.plot(t, resultant_wave, color='cyan')
+    ax_res.set_title('Resultant Wave', color='cyan')
+    ax_res.grid(True, color='green', linestyle='--', linewidth=0.5)
+    ax_res.tick_params(colors='green', which='both')
+    ax_res.spines['bottom'].set_color('green')
+    ax_res.spines['top'].set_color('green')
+    ax_res.spines['right'].set_color('green')
+    ax_res.spines['left'].set_color('green')
 
     fig.tight_layout()
 
     # Display the plot in the Tkinter Canvas
-    canvas = FigureCanvasTkAgg(fig, master=plot_frame)  # Embed Matplotlib figure in `plot_frame`
+    canvas = FigureCanvasTkAgg(fig, master=plot_frame)
     canvas.draw()
     canvas.get_tk_widget().pack()
 
@@ -60,7 +78,7 @@ def plot_waves():
 
 # Main GUI setup
 root = tk.Tk()
-root.title("Wave Parameters Input")
+root.title("Oscilloscope Wave Parameters")
 
 # Frame for the input fields
 input_frame = ttk.Frame(root)
@@ -114,3 +132,6 @@ eq_label3 = ttk.Label(equation_frame, text="")
 eq_label3.pack()
 
 root.mainloop()
+
+
+
